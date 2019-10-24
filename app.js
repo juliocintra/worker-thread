@@ -9,7 +9,6 @@ app.get('/ping', async (req, res) => {
     return res.json({ message: 'Working', date: new Date() })
 })
 
-
 app.get('/fibonacci', async (req, res) => {
     const number = fb.iterate(10000);
     res.send(number);
