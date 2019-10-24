@@ -21,6 +21,7 @@
     "bunyan": "^1.8.12",
     "express": "^4.17.1",
     "fibonacci": "^1.6.7",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "worker-threads-pool": "^2.0.0"
   }
 }

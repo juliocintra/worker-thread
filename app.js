@@ -1,6 +1,8 @@
 const app = require('express')();
 const fb = require('fibonacci');
 const runFibonacci = require('./src/workers/fibonacciWorker');
+const runFibonacciPool = require('./src/workers/fibonacciWorkerPool');
+const runFibonacciShared = require('./src/workers/fibonacciWorkerShared');
 const log = require('./src/log');
 
 app.get('/fibonacci', async (req, res) => {
@@ -20,6 +22,25 @@ app.get('/fibonacci-threaded', async (req, res) => {
         console.log(error);
         res.send('processing');
     }
+});
+
+app.get('/fibonacci-threaded-pool', async (req, res) => {
+    try {
+        runFibonacciPool({ iterations: 10000 }).then(result => log.info(result));
+        res.send('processing');
+    } catch (error) {
+        console.log(error);
+        res.send('processing');
+    }
+});
+
+app.get('/fibonacci-threaded-shared', async (req, res) => {
+    const sharedUint8Array = new Uint8Array(new SharedArrayBuffer(4));
+    for (let i = 0; i < 4; i++) {
+        runFibonacciShared({ iterations: 10000, position: i, arr: sharedUint8Array }).then(result => console.log(result));
+    }
+
+    res.send('processing');
 });
 
 app.listen(3000, () => {
