@@ -5,14 +5,15 @@ const runFibonacciPool = require('./src/workers/fibonacciWorkerPool');
 const runFibonacciShared = require('./src/workers/fibonacciWorkerShared');
 const log = require('./src/log');
 
+app.get('/ping', async (req, res) => {
+    return res.json({ message: 'Working', date: new Date() })
+})
+
+
 app.get('/fibonacci', async (req, res) => {
     const number = fb.iterate(10000);
     res.send(number);
 });
-
-app.get('/ping', async (req, res) => {
-    return res.json({ message: 'Working', date: new Date() })
-})
 
 app.get('/fibonacci-threaded', async (req, res) => {
     try {
